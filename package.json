@@ -1,0 +1,17 @@
+{
+  "name": "NexusParking-Api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Gabriel Resende <gabriel.almeida.resende@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/serves.js"
+  },
+  "dependencies": {
+    "pg": "^8.2.1",
+    "sequelize": "^5.21.10"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^5.5.1"
+  }
+}
