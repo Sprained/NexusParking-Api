@@ -5,12 +5,15 @@ const routes = require('./routes');
 
 require('./database')
 
+const Queue = require('./lib/Queue');
+
 class App {
     constructor(){
         this.server = express();
 
         this.middlewares();
         this.routes();
+        Queue.processQueue();
     }
 
     middlewares(){

@@ -4,7 +4,8 @@ const fns = require('date-fns');
 const { addDays } = fns;
 
 const Companies = require('../models/Companies');
-const Mail = require('../../lib/Mail');
+const RegisterMail = require('../jobs/RegisterMail');
+const Queue = require('../../lib/Queue');
 
 module.exports = {
     async register(req, res){
@@ -30,34 +31,18 @@ module.exports = {
         //senha temporaria
         const password = crypto.randomBytes(6).toString('HEX');
 
+        //date_end temporaria
         const date_end = addDays(new Date(), 30);
 
         const { name, cnpj, email, phone } = req.body
 
         const companie = await Companies.create({ name, cnpj, email, phone, password, address:'', date_end });
 
-        await Mail.sendMail({
-            to: `${name} <${email}>`,
-            subject: 'Requisição de registro',
-            template: 'register',
-            context: {
-                user: name,
-                email: email,
-                password: password,
-                phone: phone
-            }
-        })
-
-        await Mail.sendMail({
-            to: `Equipe Nexus <${process.env.USE_EMAIL}>`,
-            subject: 'Requisição de registro',
-            template: 'register',
-            context: {
-                user: name,
-                email: email,
-                password: password,
-                phone: phone
-            }
+        await Queue.add(RegisterMail.key, {
+            name,
+            email,
+            password,
+            phone
         })
 
         return res.json(companie);
