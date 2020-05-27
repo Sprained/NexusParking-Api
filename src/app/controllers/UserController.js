@@ -1,4 +1,7 @@
 const Yup = require('yup');
+const crypto = require('crypto');
+const fns = require('date-fns');
+const { addDays } = fns;
 
 const Companies = require('../models/Companies');
 const Mail = require('../../lib/Mail');
@@ -24,7 +27,14 @@ module.exports = {
             return res.status(400).json({ error: 'Usuario ja cadastrado.' });
         }
 
-        const { name, cnpj, email, phone } =  await Companies.create(req.body);
+        //senha temporaria
+        const password = crypto.randomBytes(6).toString('HEX');
+
+        const date_end = addDays(new Date(), 30);
+
+        const { name, cnpj, email, phone } = req.body
+
+        const companie = await Companies.create({ name, cnpj, email, phone, password, address:'', date_end });
 
         await Mail.sendMail({
             to: `${name} <${email}>`,
@@ -33,6 +43,7 @@ module.exports = {
             context: {
                 user: name,
                 email: email,
+                password: password,
                 phone: phone
             }
         })
@@ -44,10 +55,11 @@ module.exports = {
             context: {
                 user: name,
                 email: email,
+                password: password,
                 phone: phone
             }
         })
 
-        return res.json({ name, cnpj, email, phone });
+        return res.json(companie);
     }
 }

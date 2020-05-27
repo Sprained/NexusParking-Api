@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const { Model } = Sequelize
+const bcrypt = require('bcryptjs');
 
 class Companies extends Model{
     static init(sequelize){
@@ -22,7 +23,17 @@ class Companies extends Model{
             sequelize,
         });
 
+        this.addHook('beforeSave', async (companie) => {
+            if(companie.password){
+                companie.password_hash = await bcrypt.hash(companie.password, 8);
+            }
+        });
+
         return this;
+    }
+
+    checkPass(password){
+        return bcrypt.compare(password, this.password_hash);
     }
 }
 
