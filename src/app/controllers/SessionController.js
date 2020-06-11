@@ -22,7 +22,7 @@ module.exports = {
 
         //verificação se usuario existe
         if(!companie){
-            return res.status(401).json('Usuario não cadastrado!');
+            return res.status(401).json({ error: 'Usuario não cadastrado!' });
         }
 
         //verificação password
@@ -30,17 +30,17 @@ module.exports = {
             return res.status(401).json('Password informado com erro');
         }
         
-        const { id, name } = companie;
+        const { id_companies, name } = companie;
 
         return res.json({
-            user: {
-                id,
+            companie: {
+                id_companies,
                 name,
                 email
             },
-            token: jwt.sign({ id }, authConfig.secret, {
-                expiresIn: authConfig.expiresIn
-            })
+            token: jwt.sign({ id_companies }, authConfig.secret, {
+                expiresIn: authConfig.expiresIn,
+            }),
         })
     }
 }
