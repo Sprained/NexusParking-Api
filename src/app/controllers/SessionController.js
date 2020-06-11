@@ -22,7 +22,7 @@ module.exports = {
 
         //verificação se usuario existe
         if(!companie){
-            return res.status(401).json('Usuario não cadastrado!');
+            return res.status(401).json({ error: 'Usuario não cadastrado!' });
         }
 
         //verificação password
