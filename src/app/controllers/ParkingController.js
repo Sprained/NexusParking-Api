@@ -1,10 +1,25 @@
 const Yup = require('yup');
+const fns = require('date-fns');
+const { startOfDay, endOfDay, format, getHours, getMinutes } = fns;
+const sequelize = require('sequelize');
+const { Op } = sequelize;
 
 const Vehicles = require('../models/Vehicles');
 
 module.exports = {
     async index(req, res){
-        const vehicles = await Vehicles.findAll({ where: { companies_id: req.userId } })
+        const date = new Date();
+        const vehicles = await Vehicles.findAll({ 
+            where:{ 
+                companies_id: req.userId,
+                date_time:{
+                    [Op.between]: [
+                        startOfDay(date),
+                        endOfDay(date)
+                    ]
+                }
+            }
+        })
         
         return res.json(vehicles)
     },
