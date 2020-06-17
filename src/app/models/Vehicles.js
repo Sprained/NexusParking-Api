@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const { Model } = Sequelize;
+const moment = require('moment')
 
 class Vehicles extends Model{
     static init(sequelize){
@@ -11,7 +12,9 @@ class Vehicles extends Model{
             },
             color: Sequelize.STRING,
             model: Sequelize.STRING,
-            plate: Sequelize.STRING,
+            plate: {
+                type: Sequelize.STRING,
+            },
             moto: Sequelize.BOOLEAN,
             car: Sequelize.BOOLEAN,
             owner_name: Sequelize.STRING,
@@ -20,7 +23,12 @@ class Vehicles extends Model{
             owner_phone: Sequelize.BIGINT,
             owner_email: Sequelize.STRING,
             price: Sequelize.FLOAT,
-            date_time: Sequelize.DATE,
+            date_time: {
+                type: Sequelize.DATE,
+                get(){
+                    return moment(this.getDataValue('date_time')).format('hh:mm')
+                }
+            },
             paid: Sequelize.BOOLEAN
         }, {
             sequelize,

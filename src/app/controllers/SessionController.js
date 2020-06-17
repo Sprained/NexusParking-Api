@@ -38,9 +38,7 @@ module.exports = {
                 name,
                 email
             },
-            token: jwt.sign({ id_companies }, authConfig.secret, {
-                expiresIn: authConfig.expiresIn,
-            }),
+            token: jwt.sign({ id_companies }, authConfig.secret),
         })
     }
 }
