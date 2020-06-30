@@ -18,7 +18,8 @@ class Companies extends Model{
             password_hash: Sequelize.STRING,
             address: Sequelize.STRING,
             status: Sequelize.BOOLEAN,
-            date_end: Sequelize.DATE
+            date_end: Sequelize.DATE,
+            price: Sequelize.FLOAT
         },{
             sequelize,
         });

@@ -17,7 +17,8 @@ module.exports = {
                         startOfDay(date),
                         endOfDay(date)
                     ]
-                }
+                },
+                paid: null
             }
         })
         
@@ -42,13 +43,10 @@ module.exports = {
 
         const { color, model, plate, moto, car, owner_name, owner_cpf, owner_ddd, owner_phone, owner_email } = req.body;
 
-        //valor padrão de teste
-        const price = 12.73;
-
         //pegando data de entrada
         const date_time = new Date();
 
-        const vehicle = await Vehicles.create({ color, model, plate, moto, car, owner_name, owner_cpf, owner_ddd, owner_phone, owner_email, price, date_time, companies_id: req.userId })
+        const vehicle = await Vehicles.create({ color, model, plate, moto, car, owner_name, owner_cpf, owner_ddd, owner_phone, owner_email, date_time, companies_id: req.userId })
 
         return res.json(vehicle);
     }

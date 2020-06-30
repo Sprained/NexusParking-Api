@@ -1,10 +1,11 @@
 const Bee = require('bee-queue');
 
 const RegisterMail = require('../app/jobs/RegisterMail');
+const PayMail = require('../app/jobs/PayMail');
 
 const redisConfig = require('../config/redis');
 
-const jobs = [RegisterMail];
+const jobs = [RegisterMail, PayMail];
 
 class Queue{
     constructor(){

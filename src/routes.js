@@ -4,6 +4,7 @@ const routes = express.Router();
 const UserController = require('./app/controllers/UserController')
 const SessionController = require('./app/controllers/SessionController')
 const ParkingController = require('./app/controllers/ParkingController')
+const PaymentController = require('./app/controllers/PaymentController')
 
 const authMiddleware = require('./app/middleware/auth');
 
@@ -19,5 +20,9 @@ routes.use(authMiddleware);
 //rotas do estacionamento
 routes.get('/parking', ParkingController.index);
 routes.post('/parking', ParkingController.store);
+
+//rotas de pagamento
+routes.get('/payment/:id', PaymentController.index);
+routes.put('/payment/:id', PaymentController.pay);
 
 module.exports = routes;
