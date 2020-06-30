@@ -26,7 +26,7 @@ class Vehicles extends Model{
             date_time: {
                 type: Sequelize.DATE,
                 get(){
-                    return moment(this.getDataValue('date_time')).format('hh:mm')
+                    return moment(this.getDataValue('date_time')).format('HH:mm')
                 }
             },
             paid: Sequelize.BOOLEAN
