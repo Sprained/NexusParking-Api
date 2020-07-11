@@ -19,7 +19,6 @@ class Vehicles extends Model{
             car: Sequelize.BOOLEAN,
             owner_name: Sequelize.STRING,
             owner_cpf: Sequelize.BIGINT,
-            owner_ddd: Sequelize.INTEGER,
             owner_phone: Sequelize.BIGINT,
             owner_email: Sequelize.STRING,
             price: Sequelize.FLOAT,

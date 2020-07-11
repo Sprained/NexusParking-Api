@@ -21,6 +21,8 @@ routes.use(authMiddleware);
 routes.get('/parking', ParkingController.index);
 routes.post('/parking', ParkingController.store);
 
+routes.get('/paid', ParkingController.paidIndex);
+
 //rotas de pagamento
 routes.get('/payment/:id', PaymentController.index);
 routes.put('/payment/:id', PaymentController.pay);
