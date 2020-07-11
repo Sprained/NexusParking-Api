@@ -11,7 +11,7 @@ module.exports = {
         const id = req.params.id;
         const userId = req.userId;
 
-        const { companies_id, date_time, model } = await Vehicles.findOne({ where: { id_vechicles: id } });
+        const { companies_id, date_time, model, owner_phone } = await Vehicles.findOne({ where: { id_vechicles: id } });
 
         //verificar se veiculo pertene a empresa
         if(companies_id != userId){
@@ -34,7 +34,8 @@ module.exports = {
                 end: date,
                 price,
                 value,
-                model
+                model,
+                phone: owner_phone
             });
         }
         
@@ -52,7 +53,7 @@ module.exports = {
         const id = req.params.id;
         const userId = req.userId;
 
-        const { companies_id, date_time, owner_email, owner_name,  } = await Vehicles.findOne({ where: { id_vechicles: id } });
+        const { companies_id, date_time, owner_email, owner_name } = await Vehicles.findOne({ where: { id_vechicles: id } });
 
         //verificar se veiculo pertene a empresa
         if(companies_id != userId){
@@ -62,7 +63,8 @@ module.exports = {
         //informar que foi pago e valor pago para o bd
         const { price, name } = await Companies.findOne({ where: { id_companies: userId } });
 
-        const date = moment(new Date()).format('HH:mm');
+        const grossDate = new Date();
+        const date = moment(grossDate).format('HH:mm');
 
         [hourV, ] = date_time.split(':');
         [hour, ] = date.split(':');
@@ -76,10 +78,10 @@ module.exports = {
         else{
             value = price * time;
         }
-        await Vehicles.update({ paid: true, price: value }, { where: { id_vechicles: id } });
+        await Vehicles.update({ paid: true, price: value, date_time: grossDate }, { where: { id_vechicles: id } });
 
         //pegar dia formato brasileiro
-        const day = moment(new Date()).format('LL');
+        const day = moment(grossDate).format('LL');
 
         //enviar email para dono com preço pago
         await Queue.add(PayMail.key, {
