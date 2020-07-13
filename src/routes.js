@@ -27,4 +27,7 @@ routes.get('/paid', ParkingController.paidIndex);
 routes.get('/payment/:id', PaymentController.index);
 routes.put('/payment/:id', PaymentController.pay);
 
+//update usuarios
+routes.put('/user', UserController.update);
+
 module.exports = routes;
