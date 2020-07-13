@@ -19,7 +19,8 @@ class Companies extends Model{
             address: Sequelize.STRING,
             status: Sequelize.BOOLEAN,
             date_end: Sequelize.DATE,
-            price: Sequelize.FLOAT
+            price: Sequelize.FLOAT,
+            companie_name: Sequelize.STRING
         },{
             sequelize,
         });
