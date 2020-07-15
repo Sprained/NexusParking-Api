@@ -20,7 +20,8 @@ module.exports = {
 
         const { price } = await Companies.findOne({ where: { id_companies: userId } });
 
-        const date = moment(new Date()).format('HH:mm');
+        const grossDate = new Date();
+        const date = moment.tz(grossDate, "America/Sao_Paulo").format('HH:mm');
 
         [hourV, ] = date_time.split(':');
         [hour, ] = date.split(':');
