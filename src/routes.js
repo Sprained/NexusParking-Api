@@ -5,6 +5,7 @@ const UserController = require('./app/controllers/UserController')
 const SessionController = require('./app/controllers/SessionController')
 const ParkingController = require('./app/controllers/ParkingController')
 const PaymentController = require('./app/controllers/PaymentController')
+const ReportController = require('./app/controllers/ReportController')
 
 const authMiddleware = require('./app/middleware/auth');
 
@@ -26,6 +27,9 @@ routes.get('/paid', ParkingController.paidIndex);
 //rotas de pagamento
 routes.get('/payment/:id', PaymentController.index);
 routes.put('/payment/:id', PaymentController.pay);
+
+//rotas de relatorio
+routes.post('/report', ReportController.index);
 
 //update usuarios
 routes.put('/user', UserController.update);

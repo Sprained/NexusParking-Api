@@ -23,10 +23,10 @@ class Vehicles extends Model{
             owner_email: Sequelize.STRING,
             price: Sequelize.FLOAT,
             date_time: {
-                type: Sequelize.DATE,
-                get(){
-                    return moment.tz(this.getDataValue('date_time'), "America/Sao_Paulo").format('HH:mm')
-                }
+                type: Sequelize.DATE
+                // get(){
+                //     return moment.tz(this.getDataValue('date_time'), "America/Sao_Paulo")
+                // }
             },
             paid: Sequelize.BOOLEAN
         }, {

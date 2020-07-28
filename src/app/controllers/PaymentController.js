@@ -21,9 +21,10 @@ module.exports = {
         const { price } = await Companies.findOne({ where: { id_companies: userId } });
 
         const grossDate = new Date();
-        const date = moment.tz(grossDate, "America/Sao_Paulo").format('HH:mm');
+        const date = moment(grossDate).format('HH:mm');
 
-        [hourV, ] = date_time.split(':');
+        const date_time_format = moment(date_time).format('HH:mm');
+        [hourV, ] = date_time_format.split(':');
         [hour, ] = date.split(':');
 
         const time =  hour - hourV;
@@ -32,7 +33,7 @@ module.exports = {
             const value = price;
             return res.json({
                 start: date_time,
-                end: date,
+                end: grossDate,
                 price,
                 value,
                 model,
@@ -44,7 +45,7 @@ module.exports = {
 
         return res.json({
             start: date_time,
-            end: date,
+            end: grossDate,
             price,
             value,
             model
@@ -65,9 +66,10 @@ module.exports = {
         const { price, name } = await Companies.findOne({ where: { id_companies: userId } });
 
         const grossDate = new Date();
-        const date = moment.tz(grossDate, "America/Sao_Paulo").format('HH:mm');
+        const date = moment(grossDate).format('HH:mm');
 
-        [hourV, ] = date_time.split(':');
+        const date_time_format = moment(date_time).format('HH:mm');
+        [hourV, ] = date_time_format.split(':');
         [hour, ] = date.split(':');
 
         const time =  hour - hourV;
