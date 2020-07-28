@@ -89,6 +89,6 @@ module.exports = {
             name: req.userId
         })
 
-        return res.json(`http://localhost:3333/files/${req.userId}.csv`);
+        return res.json(`${process.env.APP_URL}/files/${req.userId}.csv`);
     }
 }
