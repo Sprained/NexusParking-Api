@@ -63,7 +63,7 @@ module.exports = {
         }
 
         //informar que foi pago e valor pago para o bd
-        const { price, name } = await Companies.findOne({ where: { id_companies: userId } });
+        const { price, name, price_hour } = await Companies.findOne({ where: { id_companies: userId } });
 
         const grossDate = new Date();
         const date = moment(grossDate).format('HH:mm');
@@ -79,7 +79,7 @@ module.exports = {
             value = price;
         }
         else{
-            value = price * time;
+            value = price + (time * price_hour);
         }
         await Vehicles.update({ paid: true, price: value, date_time: grossDate }, { where: { id_vechicles: id } });
 
