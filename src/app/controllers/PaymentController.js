@@ -18,7 +18,7 @@ module.exports = {
             return res.status(400).json({ error: 'Veiculo não pertence a empresa!' });
         }
 
-        const { price } = await Companies.findOne({ where: { id_companies: userId } });
+        const { price, price_hour } = await Companies.findOne({ where: { id_companies: userId } });
 
         const grossDate = new Date();
         const date = moment(grossDate).format('HH:mm');
@@ -41,7 +41,7 @@ module.exports = {
             });
         }
         
-        const value = time * price;
+        const value = price + (time * price_hour);
 
         return res.json({
             start: date_time,
