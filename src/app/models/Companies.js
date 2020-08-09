@@ -15,7 +15,9 @@ class Companies extends Model{
             phone: Sequelize.BIGINT,
             email: Sequelize.STRING,
             password: Sequelize.VIRTUAL,
+            passwordAdm: Sequelize.VIRTUAL,
             password_hash: Sequelize.STRING,
+            adm_password: Sequelize.STRING,
             address: Sequelize.STRING,
             status: Sequelize.BOOLEAN,
             date_end: Sequelize.DATE,
@@ -30,6 +32,10 @@ class Companies extends Model{
             if(companie.password){
                 companie.password_hash = await bcrypt.hash(companie.password, 8);
             }
+
+            if(companie.passwordAdm){
+                companie.adm_password = await bcrypt.hash(companie.passwordAdm, 8);
+            }
         });
 
         return this;
@@ -37,6 +43,10 @@ class Companies extends Model{
 
     checkPass(password){
         return bcrypt.compare(password, this.password_hash);
+    }
+
+    checkAdmPass(passwordAdm){
+        return bcrypt.compare(passwordAdm, this.adm_password);
     }
 }
 

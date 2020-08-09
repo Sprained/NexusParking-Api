@@ -25,6 +25,7 @@ class RegisterMail{
             context: {
                 user: data.name,
                 email: data.email,
+                passwordAdm: data.passwordAdm,
                 password: data.password,
                 phone: data.phone
             }
