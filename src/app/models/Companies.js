@@ -23,7 +23,9 @@ class Companies extends Model{
             date_end: Sequelize.DATE,
             price: Sequelize.FLOAT,
             price_hour: Sequelize.FLOAT,
-            companie_name: Sequelize.STRING
+            companie_name: Sequelize.STRING,
+            num_car: Sequelize.INTEGER,
+            num_moto: Sequelize.INTEGER
         },{
             sequelize,
         });

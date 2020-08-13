@@ -69,6 +69,8 @@ module.exports = {
             confirmAdmPassword : Yup.string().when('admPassword', (admPassword, field) => 
                 admPassword ? field.required().oneOf([Yup.ref('admPassword')]) : field
             ),
+            num_car: Yup.number(),
+            num_moto: Yup.number()
         });
 
         //verificação se o usuario é o mesmo logado
