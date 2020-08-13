@@ -6,8 +6,10 @@ const SessionController = require('./app/controllers/SessionController')
 const ParkingController = require('./app/controllers/ParkingController')
 const PaymentController = require('./app/controllers/PaymentController')
 const ReportController = require('./app/controllers/ReportController')
+const VehiclesController = require('./app/controllers/VehiclesController')
 
 const authMiddleware = require('./app/middleware/auth');
+const admMiddleware = require('./app/middleware/authAdmin');
 
 //pre-registro de usuario
 routes.post('/register', UserController.register);
@@ -24,12 +26,17 @@ routes.post('/parking', ParkingController.store);
 
 routes.get('/paid', ParkingController.paidIndex);
 
+routes.get('/count', VehiclesController.countVehicles);
+
 //rotas de pagamento
 routes.get('/payment/:id', PaymentController.index);
 routes.put('/payment/:id', PaymentController.pay);
 
 //rotas de relatorio
 routes.post('/report', ReportController.index);
+
+//verificar se usuario tem senha administrativa correta
+routes.use(admMiddleware);
 
 //update usuarios
 routes.put('/user', UserController.update);
