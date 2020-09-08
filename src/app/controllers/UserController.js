@@ -94,5 +94,20 @@ module.exports = {
         await user.update(req.body);
 
         return res.json()
+    },
+    async verify(req, res){
+        const { password, passwordAdm } = req.body;
+
+        const user = await Companies.findByPk(req.userId);
+
+        if(password && !(await user.checkPass(password))){
+            return res.status(401).json({ error: 'Senha informado com error!' });
+        }
+
+        if(passwordAdm && !(await user.checkAdmPass(passwordAdm))){
+            return res.status(401).json({ error: 'Senha administrativa informada com error!' });
+        }
+
+        return res.status(200).json();
     }
 }
