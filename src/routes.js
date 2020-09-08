@@ -35,6 +35,9 @@ routes.put('/payment/:id', PaymentController.pay);
 //rotas de relatorio
 routes.post('/report', ReportController.index);
 
+//rota verifiação de senhas
+routes.post('/verify', UserController.verify);
+
 //verificar se usuario tem senha administrativa correta
 routes.use(admMiddleware);
 
