@@ -1,20 +1,25 @@
-const Companies = require('../models/Companies');
+const jwt = require('jsonwebtoken');
+const util = require('util');
+const { promisify } = util;
+
+const authConfig = require('../../config/auth');
 
 module.exports = async (req, res, next) => {
-    const authAdmin = req.headers.admin;
+    const role = req.headers.role;
 
-    //verificar se a senha foi passada nos headers
-    if(!authAdmin){
-        return res.status(401).json('Senha administrativa não informada!');
+    
+    if(!role){
+        return res.status(401).json({ error: 'Usuario sem permissão administrativa!' });
     }
 
-    const companie = await Companies.findOne({ where: { id_companies: req.userId } });
-
     try {
-        await companie.checkAdmPass(authAdmin);
+        const decoded = await promisify(jwt.verify)(role, authConfig.secret);
 
-        return next();
+        if(decoded.role === 'adm'){
+            return next();
+        }
+
     } catch (error) {
-        return res.status(401).json('Senha invalida!');
+        return res.status(401).json({ error: 'Usuario sem permissão administrativa!' });
     }
 }

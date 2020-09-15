@@ -2,10 +2,12 @@ const Yup = require('yup');
 const crypto = require('crypto');
 const fns = require('date-fns');
 const { addDays } = fns;
+const jwt = require('jsonwebtoken');
 
 const Companies = require('../models/Companies');
 const RegisterMail = require('../jobs/RegisterMail');
 const Queue = require('../../lib/Queue');
+const authConfig = require('../../config/auth');
 
 module.exports = {
     async register(req, res){
@@ -108,6 +110,19 @@ module.exports = {
             return res.status(401).json({ error: 'Senha administrativa informada com error!' });
         }
 
-        return res.status(200).json();
+        return res.json({
+            token: jwt.sign({ role: 'adm' }, authConfig.secret, {
+                expiresIn: '20m'
+            })
+        });
+    },
+    async index(req, res){
+        const user = await Companies.findByPk(req.userId);
+
+        if(!user){
+            return res.status(400).json({ error: 'Usuario inexistente.' });
+        }
+
+        return res.status(200).json(user);
     }
 }
