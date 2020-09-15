@@ -38,6 +38,9 @@ routes.post('/report', ReportController.index);
 //rota verifiação de senhas
 routes.post('/verify', UserController.verify);
 
+//informações usuario
+routes.get('/user', UserController.index);
+
 //verificar se usuario tem senha administrativa correta
 routes.use(admMiddleware);
 
